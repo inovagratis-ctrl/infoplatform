@@ -1,0 +1,7 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/nucleovi/app.nucleovip.com.br"
+PassengerBaseURI "/"
+PassengerNodejs "/home/nucleovi/nodevenv/app.nucleovip.com.br/19/bin/node"
+PassengerAppType node
+PassengerStartupFile server.js
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END

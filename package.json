@@ -1,0 +1,43 @@
+{
+  "name": "infoplatform",
+  "version": "1.0.0",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.10.0",
+    "@stripe/stripe-js": "^3.0.0",
+    "bcryptjs": "^2.4.3",
+    "clsx": "^2.1.0",
+    "google-auth-library": "^10.9.0",
+    "next": "^14.2.0",
+    "next-auth": "^4.24.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-google-recaptcha-v3": "^1.11.0",
+    "stripe": "^14.0.0",
+    "tailwind-merge": "^2.2.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "prisma": "^5.10.0",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.23.0",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "npm@11.17.0+sha512.3eeaf18997b11070d313849268b23766b9db0068997dec9471073170fe43fa17f2b4d0337bf0f52330ee2274e7f5754b21b01052742e48f5c9c74d8b1e32ef43"
+}
