@@ -12,6 +12,7 @@ model User {
   name          String?
   email         String         @unique
   cpf           String?        @unique
+  phone         String?
   password      String?
   googleId      String?      @unique
   role          String         @default("user")
