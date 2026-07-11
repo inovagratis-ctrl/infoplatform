@@ -109,45 +109,145 @@ export default async function HomePage() {
       </section>
 
       {/* Taxas Section */}
-      <section id="taxas" className="bg-gray-50 py-16 border-b border-gray-100">
+      <section id="taxas" className="bg-gray-50 py-20 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Taxas que cabem no seu negócio</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">As menores taxas do mercado para você vender mais e ganhar mais</p>
+          <div className="text-center mb-16">
+            <span className="inline-block bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+              🏆 Menores taxas do Brasil
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              As menores taxas do Brasil para criadores de conteúdo
+            </h2>
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+              Quanto mais você fatura, menos paga. Você só paga se vender — sem taxa de adesão, sem mensalidade.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
-              <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+
+          {/* Pricing Tiers */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+            {/* Tier 1 */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative">
+              <div className="text-sm font-semibold text-gray-500 mb-2">Até 5 dígitos faturados</div>
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="text-5xl font-bold text-gray-900">9,9%</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">PIX</h3>
-              <p className="text-4xl font-bold text-primary-600 mb-2">1,99%</p>
-              <p className="text-sm text-gray-500">Receba em até 2 dias úteis</p>
+              <p className="text-sm text-gray-500 mb-6">+ R$1 por venda aprovada</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Atendimento 7 dias por semana
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Guias práticos e tutoriais
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Área de membros personalizada
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Checkout PIX, cartão e boleto
+                </li>
+              </ul>
+              <Link href="/register" className="block text-center bg-gray-900 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors">
+                Comece agora
+              </Link>
             </div>
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
-              <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+
+            {/* Tier 2 - Destaque */}
+            <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-8 shadow-lg border border-primary-500 relative text-white scale-105">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="bg-vip-400 text-gray-900 text-xs font-bold px-4 py-1 rounded-full">MAIS POPULAR</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Cartão de Crédito</h3>
-              <p className="text-4xl font-bold text-primary-600 mb-2">3,49%</p>
-              <p className="text-sm text-gray-500">Em até 12 parcelas | Receba em 30 dias</p>
+              <div className="text-sm font-semibold text-primary-200 mb-2">A partir de R$ 500 mil/ano</div>
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="text-5xl font-bold text-white">8,9%</span>
+              </div>
+              <p className="text-sm text-primary-200 mb-6">+ R$1 por venda aprovada</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2 text-sm text-primary-100">
+                  <svg className="w-5 h-5 text-vip-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Tudo do plano anterior
+                </li>
+                <li className="flex items-start gap-2 text-sm text-primary-100">
+                  <svg className="w-5 h-5 text-vip-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Gerente de conta dedicado
+                </li>
+                <li className="flex items-start gap-2 text-sm text-primary-100">
+                  <svg className="w-5 h-5 text-vip-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Relatórios avançados de vendas
+                </li>
+                <li className="flex items-start gap-2 text-sm text-primary-100">
+                  <svg className="w-5 h-5 text-vip-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Suporte prioritário
+                </li>
+              </ul>
+              <Link href="/register" className="block text-center bg-white text-primary-700 py-3 rounded-xl font-semibold hover:bg-primary-50 transition-colors">
+                Comece agora
+              </Link>
             </div>
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
-              <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+
+            {/* Tier 3 */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative">
+              <div className="text-sm font-semibold text-gray-500 mb-2">6 dígitos faturados</div>
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="text-4xl font-bold text-gray-900">até 8,9%</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Boleto</h3>
-              <p className="text-4xl font-bold text-primary-600 mb-2">2,99%</p>
-              <p className="text-sm text-gray-500">Receba em até 3 dias úteis</p>
+              <p className="text-sm text-gray-500 mb-6">+ R$1 por venda aprovada</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Tudo do plano anterior
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Taxas personalizadas
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  API de integração
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-600">
+                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Conta corporativa
+                </li>
+              </ul>
+              <Link href="/register" className="block text-center bg-gray-900 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors">
+                Comece agora
+              </Link>
             </div>
           </div>
-          <p className="text-center text-sm text-gray-400 mt-8">* Taxas aplicadas sobre o valor da venda. Sem taxa de adesão ou mensalidade.</p>
+
+          {/* Payment Methods */}
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto">
+            <h3 className="text-xl font-bold text-gray-900 text-center mb-2">E quanto custa?</h3>
+            <p className="text-center text-gray-500 mb-8">Você só paga se vender. Sem taxa de adesão. Sem mensalidade.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="text-center p-6 bg-gray-50 rounded-xl">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-1">PIX</h4>
+                <p className="text-sm text-gray-500">Receba em 2 dias</p>
+              </div>
+              <div className="text-center p-6 bg-gray-50 rounded-xl">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-1">Cartão de Crédito</h4>
+                <p className="text-sm text-gray-500">Até 12x | Receba em 15 dias</p>
+              </div>
+              <div className="text-center p-6 bg-gray-50 rounded-xl">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-1">Boleto</h4>
+                <p className="text-sm text-gray-500">Receba em 2 dias</p>
+              </div>
+            </div>
+            <p className="text-center text-sm text-gray-400 mt-6">* Taxa cobrada sobre o valor total de cada venda aprovada do criador.</p>
+          </div>
         </div>
       </section>
 
