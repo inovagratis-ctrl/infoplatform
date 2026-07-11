@@ -1,0 +1,52 @@
+=========================================================
+  CONTEXTO DA SESSÃO — opencode
+  Projeto: infoplatform (app.nucleovip.com.br)
+  Data: 09/07/2026
+=========================================================
+
+=== O QUE FOI IMPLANTADO ===
+- Landing page com hero novo e seção de taxas
+- Navbar com links: FAQ, Taxas, Sobre Nós, Criar Produto, Ajuda
+- Sistema de saque completo (WithdrawalForm, API /api/withdrawals)
+- Schema Prisma: tabela Withdrawal, campos pixKey/pixKeyType em User, paidAt em AffiliateSale
+- Build local gerado sem erros, standalone output
+
+=== STATUS ATUAL ===
+- Site: Servindo página estática "Página não publicada" (index.html da MyWay)
+- PHP: 503 Service Unavailable (não consegue fork)
+- Node.js: Parado (app_status: "stopped" no .cl.selector/node-selector.json)
+- Banco: SQLite migrado (prisma db push aplicado no dev.db de produção)
+- .htaccess: Apenas "DirectoryIndex index.html" (sem Passenger)
+- Server: LiteSpeed, CloudLinux LVE
+
+=== PROBLEMA PRINCIPAL ===
+- Servidor atingiu 99/100 processos do LVE
+- Causa: Passenger tentou restartar Node.js repetidamente (build crashou)
+- Efeito: "fork: Resource temporarily unavailable" — nem PHP nem Node.js conseguem criar processos
+- Solução necessária: liberar slots de processo (wait, suporte MyWay, ou restart LiteSpeed)
+
+=== CREDENCIAIS ===
+- FTP: ftp.nucleovip.com.br | user: nucleovi | senha: .i(4Np9PAvsQ32
+- cPanel: https://nucleovip.com.br:2083 | user: nucleovi | senha: .i(4Np9PAvsQ32
+- Node.js: v19 (path: /home/nucleovi/nodevenv/app.nucleovip.com.br/19/bin/node)
+- Domínio: app.nucleovip.com.br
+
+=== ARQUIVOS IMPORTANTES ===
+- server.js: entry point standalone (4.6 KB)
+- .htaccess: config do diretório
+- .cl.selector/node-selector.json: config do Node.js Selector
+- prisma/schema.prisma: schema do banco (Withdrawal, etc.)
+- prisma/dev.db: banco SQLite de produção (116 KB, já migrado)
+- stderr.log: logs de erro do Node.js
+- tmp/restart.txt: arquivo de restart do Passenger
+
+=== PRÓXIMOS PASSOS (quando PHP/Node voltar) ===
+1. Deletar index.html (ou renomear via FTP)
+2. Restaurar .htaccess com config Passenger
+3. Setar app_status: "started" no node-selector.json
+4. Build extraído (via extract.php do zip .next-standalone.zip)
+
+=== HOSTING ===
+- Provedor: MyWay (NÃO Hostinger)
+- cPanel: CloudLinux com Node.js Selector via LVE
+=========================================================

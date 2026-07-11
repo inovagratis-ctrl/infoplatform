@@ -1,0 +1,12 @@
+{
+    "app.nucleovip.com.br": {
+        "app_mode": "production",
+        "app_status": "stopped",
+        "app_uri": "",
+        "config_files": [],
+        "domain": "app.nucleovip.com.br",
+        "env_vars": {},
+        "nodejs_version": "19",
+        "startup_file": "disabled.js"
+    }
+}
