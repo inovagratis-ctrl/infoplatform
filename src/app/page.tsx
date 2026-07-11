@@ -36,14 +36,22 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-primary-900 to-gray-900 text-white">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
-        <div className="max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8 relative">
+      <section className="relative overflow-hidden bg-gray-900 text-white min-h-[600px] flex items-center">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80')" }}
+        />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-primary-900/85 to-gray-900/95" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-gray-900/50" />
+        
+        <div className="max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex justify-center mb-6">
               <LogoIcon className="w-16 h-16" />
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               A{" "}
               <span className="bg-gradient-to-r from-vip-300 to-vip-500 text-transparent bg-clip-text">
                 loja de criadores
