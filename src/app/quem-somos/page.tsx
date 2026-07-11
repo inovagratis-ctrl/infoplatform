@@ -17,7 +17,7 @@ const values = [
   {
     icon: "🤝",
     title: "Parceria com o Criador",
-    desc: "Diferente das grandes plataformas que cobram taxas abusivas, a Núcleo VIP fica com apenas 5%. Nosso sucesso está ligado ao seu sucesso.",
+    desc: "Diferente das grandes plataformas que cobram taxas abusivas, a Núcleo VIP fica com apenas 4,99%. Nosso sucesso está ligado ao seu sucesso.",
   },
   {
     icon: "🇧🇷",
@@ -101,11 +101,11 @@ export default function QuemSomosPage() {
         <h2 className="text-2xl font-bold text-gray-900 mb-10 text-center">Núcleo VIP em Números</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="text-center p-6">
-            <p className="text-3xl font-bold text-primary-600">5%</p>
+            <p className="text-3xl font-bold text-primary-600">4,99%</p>
             <p className="text-sm text-gray-500 mt-1">Taxa da plataforma</p>
           </div>
           <div className="text-center p-6">
-            <p className="text-3xl font-bold text-primary-600">95%</p>
+            <p className="text-3xl font-bold text-primary-600">até 97%</p>
             <p className="text-sm text-gray-500 mt-1">Para o produtor</p>
           </div>
           <div className="text-center p-6">

@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "Quanto a plataforma cobra de taxa?",
     answer:
-      "A Núcleo VIP cobra apenas 5% de taxa sobre cada venda. As comissões de afiliados são descontadas do valor do produtor. Não há taxa de adesão ou mensalidade.",
+      "A Núcleo VIP cobra apenas 4,99% de taxa sobre cada venda (ou menos, conforme seu faturamento). As comissões de afiliados são descontadas do valor do produtor. Não há taxa de adesão ou mensalidade.",
   },
   {
     question: "Como recebo meus ganhos como produtor?",

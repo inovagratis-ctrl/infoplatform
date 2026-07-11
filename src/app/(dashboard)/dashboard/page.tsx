@@ -86,7 +86,7 @@ export default async function AdminDashboard() {
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2 border-b border-gray-50">
               <span className="text-sm text-gray-600">Taxa da plataforma</span>
-              <span className="text-sm font-semibold text-green-600">5%</span>
+              <span className="text-sm font-semibold text-green-600">4,99%</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-50">
               <span className="text-sm text-gray-600">Stripe</span>

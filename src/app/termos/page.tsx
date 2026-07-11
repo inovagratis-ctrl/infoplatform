@@ -67,8 +67,8 @@ export default function TermosPage() {
               dados de cartão de crédito ou informações bancárias sensíveis.
             </p>
             <ul className="text-gray-600 leading-relaxed space-y-2 list-disc pl-5 mt-3">
-              <li>O produtor recebe 95% do valor da venda, deduzida a comissão de afiliados quando aplicável.</li>
-              <li>A plataforma retém 5% como taxa de serviço.</li>
+              <li>O produtor recebe até 97,01% do valor da venda, deduzida a comissão de afiliados quando aplicável.</li>
+              <li>A plataforma retém até 2,99% como taxa de serviço (varia conforme faturamento).</li>
               <li>Os repasses seguem o cronograma estabelecido pelo processador de pagamentos.</li>
             </ul>
           </section>

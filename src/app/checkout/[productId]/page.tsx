@@ -5,9 +5,9 @@ import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 const PAYMENT_METHODS = [
-  { name: "Cartão de Crédito", icon: "💳", desc: "Até 12x sem juros" },
-  { name: "PIX", icon: "⚡", desc: "Aprovação instantânea" },
-  { name: "Boleto", icon: "📄", desc: "Pague em até 3 dias" },
+  { name: "Cartão de Crédito", icon: "💳", desc: "Até 12x sem juros | Receba em 15 dias" },
+  { name: "PIX", icon: "⚡", desc: "Aprovação instantânea | Receba em até 2 dias úteis" },
+  { name: "Boleto", icon: "📄", desc: "Pague em até 3 dias | Receba em até 2 dias úteis" },
 ]
 
 const BENEFITS = [
