@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma"
 
+export const dynamic = "force-dynamic"
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nucleovip.com.br"
 
 export default async function sitemap() {
