@@ -129,9 +129,9 @@ export default async function HomePage() {
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative">
               <div className="text-sm font-semibold text-gray-500 mb-2">Até 5 dígitos faturados</div>
               <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-5xl font-bold text-gray-900">9,9%</span>
+                <span className="text-5xl font-bold text-gray-900">4,99%</span>
               </div>
-              <p className="text-sm text-gray-500 mb-6">+ R$1 por venda aprovada</p>
+              <p className="text-sm text-gray-500 mb-6">por venda aprovada</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2 text-sm text-gray-600">
                   <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
@@ -162,9 +162,9 @@ export default async function HomePage() {
               </div>
               <div className="text-sm font-semibold text-primary-200 mb-2">A partir de R$ 500 mil/ano</div>
               <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-5xl font-bold text-white">8,9%</span>
+                <span className="text-5xl font-bold text-white">3,99%</span>
               </div>
-              <p className="text-sm text-primary-200 mb-6">+ R$1 por venda aprovada</p>
+              <p className="text-sm text-primary-200 mb-6">por venda aprovada</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2 text-sm text-primary-100">
                   <svg className="w-5 h-5 text-vip-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
@@ -192,9 +192,9 @@ export default async function HomePage() {
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative">
               <div className="text-sm font-semibold text-gray-500 mb-2">6 dígitos faturados</div>
               <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-4xl font-bold text-gray-900">até 8,9%</span>
+                <span className="text-4xl font-bold text-gray-900">até 2,99%</span>
               </div>
-              <p className="text-sm text-gray-500 mb-6">+ R$1 por venda aprovada</p>
+              <p className="text-sm text-gray-500 mb-6">por venda aprovada</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2 text-sm text-gray-600">
                   <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
