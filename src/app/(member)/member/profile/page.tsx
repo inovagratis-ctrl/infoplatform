@@ -61,6 +61,8 @@ export default function ProfilePage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: form.name,
+        email: form.email,
+        cpf: form.cpf,
         phone: form.phone,
         producerName: form.producerName,
         producerBio: form.producerBio,
@@ -177,10 +179,9 @@ export default function ProfilePage() {
             <input
               type="email"
               value={form.email}
-              disabled
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-500"
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
-            <p className="text-xs text-gray-400 mt-1">O email não pode ser alterado</p>
           </div>
 
           <div>
@@ -199,10 +200,10 @@ export default function ProfilePage() {
             <input
               type="text"
               value={form.cpf}
-              disabled
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-500"
+              onChange={(e) => setForm({ ...form, cpf: e.target.value })}
+              placeholder="000.000.000-00"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
-            <p className="text-xs text-gray-400 mt-1">O CPF não pode ser alterado</p>
           </div>
 
           {form.role === "producer" && (

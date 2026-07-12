@@ -29,6 +29,9 @@ export async function POST(req: Request) {
       isSubscription: body.isSubscription || false,
       subscriptionDays: body.subscriptionDays ? parseInt(body.subscriptionDays) : null,
       published: body.published || false,
+      tags: body.tags || null,
+      targetAudience: body.targetAudience || null,
+      requirements: body.requirements || null,
     },
   })
   return NextResponse.json(product)

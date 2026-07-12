@@ -17,8 +17,13 @@ export default function EditProductPage() {
     isSubscription: false,
     subscriptionDays: "",
     published: false,
+    tags: "",
+    targetAudience: "",
+    requirements: "",
   })
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [preview, setPreview] = useState("")
 
   useEffect(() => {
     fetch(`/api/products/${params.id}`)
@@ -35,9 +40,42 @@ export default function EditProductPage() {
           isSubscription: data.isSubscription,
           subscriptionDays: data.subscriptionDays ? String(data.subscriptionDays) : "",
           published: data.published,
+          tags: data.tags || "",
+          targetAudience: data.targetAudience || "",
+          requirements: data.requirements || "",
         })
+        if (data.imageUrl) setPreview(data.imageUrl)
       })
   }, [params.id])
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (file.size > 4 * 1024 * 1024) {
+      alert("Arquivo muito grande. Maximo 4MB")
+      return
+    }
+
+    setUploading(true)
+    const formData = new FormData()
+    formData.append("file", file)
+
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: formData })
+      if (res.ok) {
+        const data = await res.json()
+        setForm({ ...form, imageUrl: data.url })
+        setPreview(data.url)
+      } else {
+        const data = await res.json()
+        alert(data.error || "Erro ao enviar imagem")
+      }
+    } catch {
+      alert("Erro ao enviar imagem")
+    }
+    setUploading(false)
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -76,7 +114,7 @@ export default function EditProductPage() {
 
       <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Titulo</label>
           <input
             type="text"
             value={form.title}
@@ -87,7 +125,7 @@ export default function EditProductPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Descricao</label>
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -99,7 +137,7 @@ export default function EditProductPage() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Preço (R$)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Preco (R$)</label>
             <input
               type="number"
               step="0.01"
@@ -110,7 +148,7 @@ export default function EditProductPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Preço Comparativo (R$)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Preco Comparativo (R$)</label>
             <input
               type="number"
               step="0.01"
@@ -122,22 +160,109 @@ export default function EditProductPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">URL da Imagem</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Imagem do Produto</label>
+          <div className="flex items-center gap-4">
+            <label className="flex-1 flex items-center justify-center px-4 py-8 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary-500 transition-colors">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              {uploading ? (
+                <span className="text-gray-500">Enviando...</span>
+              ) : (
+                <span className="text-gray-500">Clique ou arraste uma imagem</span>
+              )}
+            </label>
+            {preview && (
+              <div className="relative">
+                <img src={preview} alt="Preview" className="w-24 h-24 object-cover rounded-lg" />
+                <button
+                  type="button"
+                  onClick={() => { setPreview(""); setForm({ ...form, imageUrl: "" }) }}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center"
+                >
+                  X
+                </button>
+              </div>
+            )}
+          </div>
           <input
             type="url"
             value={form.imageUrl}
-            onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            onChange={(e) => { setForm({ ...form, imageUrl: e.target.value }); setPreview(e.target.value) }}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg mt-2"
+            placeholder="Ou cole a URL da imagem"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">URL do Conteúdo</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">URL do Conteudo</label>
           <input
             type="url"
             value={form.contentUrl}
             onChange={(e) => setForm({ ...form, contentUrl: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Conteudo</label>
+            <select
+              value={form.contentType}
+              onChange={(e) => setForm({ ...form, contentType: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            >
+              <option value="video">Video</option>
+              <option value="pdf">PDF/E-book</option>
+              <option value="text">Texto</option>
+              <option value="link">Link Externo</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Dias de Acesso (assinatura)</label>
+            <input
+              type="number"
+              value={form.subscriptionDays}
+              onChange={(e) => setForm({ ...form, subscriptionDays: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              disabled={!form.isSubscription}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+          <input
+            type="text"
+            value={form.tags}
+            onChange={(e) => setForm({ ...form, tags: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            placeholder="Ex: peticao, advogado, civel, familia"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Publico-alvo</label>
+          <textarea
+            value={form.targetAudience}
+            onChange={(e) => setForm({ ...form, targetAudience: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            rows={2}
+            placeholder="Ex: Advogados, estudantes de direito, escritorios de advocacia"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Pre-requisitos</label>
+          <textarea
+            value={form.requirements}
+            onChange={(e) => setForm({ ...form, requirements: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            rows={2}
+            placeholder="Ex: Nenhum pre-requisito necessario"
           />
         </div>
 
@@ -167,7 +292,7 @@ export default function EditProductPage() {
           disabled={loading}
           className="w-full bg-primary-600 text-white py-2 rounded-lg font-medium hover:bg-primary-700 disabled:opacity-50"
         >
-          {loading ? "Salvando..." : "Salvar Alterações"}
+          {loading ? "Salvando..." : "Salvar Alteracoes"}
         </button>
       </form>
     </div>

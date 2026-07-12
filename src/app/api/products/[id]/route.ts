@@ -31,6 +31,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       isSubscription: body.isSubscription,
       subscriptionDays: body.subscriptionDays ? parseInt(body.subscriptionDays) : null,
       published: body.published,
+      tags: body.tags || null,
+      targetAudience: body.targetAudience || null,
+      requirements: body.requirements || null,
     },
   })
   return NextResponse.json(product)

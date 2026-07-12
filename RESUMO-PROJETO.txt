@@ -1,0 +1,193 @@
+# ============================================================
+# RESUMO DO PROJETO - INFOPLATFORM / NUCLEOVIP
+# ============================================================
+# Ultima atualizacao: 11/07/2026
+# ============================================================
+
+## GERAL
+- GitHub: https://github.com/inovagratis-ctrl/infoplatform
+- Vercel: https://nucleovip.com.br
+- Dominio: nucleovip.com.br
+- Plataforma: infoprodutos (Nucleo VIP)
+
+## CREDENCIAIS DE TESTE
+- Admin: admin@infoplatform.com / admin123
+- Produtor: produtor@teste.com / produtor123
+- Produtor 2: produtor2@teste.com / produtor123
+- Afiliado: afiliado@teste.com / user123
+- Comprador: user@teste.com / user123
+
+## LINKS IMPORTANTES
+- Site: https://nucleovip.com.br
+- Login: https://nucleovip.com.br/login
+- Admin: https://nucleovip.com.br/dashboard
+- Produtos Admin: https://nucleovip.com.br/dashboard/products
+- Usuarios Admin: https://nucleovip.com.br/dashboard/users
+- Perfil: https://nucleovip.com.br/member/profile
+- Criar Produto: https://nucleovip.com.br/dashboard/products/new
+
+## SERVICOS E API KEYS
+
+### Stripe (Producao)
+- Ver CREDENCIAIS.txt para chaves completas
+
+### Google OAuth
+- Ver CREDENCIAIS.txt para chaves completas
+
+### reCAPTCHA
+- Ver CREDENCIAIS.txt para chaves completas
+
+### Banco de Dados (Neon)
+- Ver CREDENCIAIS.txt para connection string
+
+### NextAuth
+- NEXTAUTH_SECRET: (ver .env)
+- NEXTAUTH_URL: https://nucleovip.com.br
+
+### Vercel Blob (Imagens)
+- BLOB_READ_WRITE_TOKEN: configurado automaticamente
+
+## PRODUTOS CRIADOS
+1. Kit Petição Rápida - R$ 47,00
+   - 55+ modelos de petições (.docx)
+   - Videoaula bônus
+   - Planilha de controle
+   - Guia de prazos
+   - 5 bônus exclusivos
+   - Garantia de 7 dias
+
+## FUNCIONALIDADES IMPLEMENTADAS
+
+### Autenticacao
+- Login com email/senha
+- Login com Google OAuth
+- Registro com CAPTCHA (reCAPTCHA v3)
+- Protecao de rotas por papel (admin, producer, affiliate, user)
+
+### Area do Admin (/dashboard)
+- Dashboard com estatisticas
+- Gerenciar produtos (criar, editar, excluir)
+- Gerenciar usuarios (editar email, CPF, papel, excluir)
+- Gerenciar saques
+- Upload de imagens (Vercel Blob)
+
+### Area do Produtor (/producer)
+- Criar e editar produtos
+- Visualizar pedidos
+- Visualizar ganhos
+- Gerenciar afiliados
+
+### Area do Afiliado (/affiliate)
+- Gerar links de afiliado
+- Visualizar comissoes
+- Produtos disponiveis
+
+### Area do Comprador (/member)
+- Visualizar produtos comprados
+- Editar perfil (nome, email, CPF, telefone)
+- Alterar senha
+
+### Paginas Publicas
+- Home com hero, beneficios, como funciona, FAQ, precos
+- Quem Somos
+- Ajuda
+- Termos de Uso
+- Privacidade
+
+### Pagamento (Stripe)
+- Checkout com cartao e boleto
+- Webhook para confirmar pagamentos
+- Taxas: 4.99% / 3.99% / 2.99% (tiered)
+
+## ESTRUTURA DO PROJETO
+```
+infoplatform/
+├── prisma/
+│   └── schema.prisma
+├── src/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   │   ├── login/page.tsx
+│   │   │   └── register/page.tsx
+│   │   ├── (dashboard)/
+│   │   │   ├── layout.tsx
+│   │   │   ├── AdminSidebar.tsx
+│   │   │   └── dashboard/
+│   │   │       ├── page.tsx
+│   │   │       ├── products/
+│   │   │       │   ├── page.tsx
+│   │   │       │   ├── new/page.tsx
+│   │   │       │   └── [id]/edit/page.tsx
+│   │   │       ├── users/
+│   │   │       │   ├── page.tsx
+│   │   │       │   └── [id]/edit/page.tsx
+│   │   │       └── withdrawals/page.tsx
+│   │   ├── (member)/
+│   │   │   └── member/
+│   │   │       ├── page.tsx
+│   │   │       ├── profile/page.tsx
+│   │   │       └── products/[id]/page.tsx
+│   │   ├── api/
+│   │   │   ├── admin/
+│   │   │   │   ├── users/[id]/route.ts
+│   │   │   │   └── withdrawals/route.ts
+│   │   │   ├── auth/[...nextauth]/route.ts
+│   │   │   ├── checkout/route.ts
+│   │   │   ├── products/route.ts
+│   │   │   ├── products/[id]/route.ts
+│   │   │   ├── profile/route.ts
+│   │   │   ├── register/route.ts
+│   │   │   ├── upload/route.ts
+│   │   │   └── webhooks/stripe/route.ts
+│   │   ├── page.tsx
+│   │   ├── quem-somos/page.tsx
+│   │   ├── ajuda/page.tsx
+│   │   ├── termos/page.tsx
+│   │   └── privacidade/page.tsx
+│   ├── components/
+│   │   └── Navbar.tsx
+│   └── lib/
+│       ├── auth.ts
+│       ├── prisma.ts
+│       └── cpf.ts
+├── .env
+├── CREDENCIAIS.txt
+└── RESUMO-PROJETO.txt
+```
+
+## COMANDOS UTEIS
+
+### Deploy
+```bash
+$nodeDir = "C:\Users\Eusimar\nodejs\node-v22.16.0-win-x64"
+& "$nodeDir\node.exe" "$nodeDir\node_modules\vercel\dist\index.js" --prod --yes
+```
+
+### Prisma
+```bash
+$nodeDir = "C:\Users\Eusimar\nodejs\node-v22.16.0-win-x64"
+& "$nodeDir\node.exe" "$nodeDir\node_modules\prisma\build\index.js" db push
+```
+
+### Variaveis de Ambiente
+```bash
+$nodeDir = "C:\Users\Eusimar\nodejs\node-v22.16.0-win-x64"
+& "$nodeDir\node.exe" "$nodeDir\node_modules\vercel\dist\index.js" env ls
+```
+
+## PROXIMOS PASSOS POSSIVEIS
+- [ ] Integrar Google Ads / Facebook Ads
+- [ ] Adicionar mais produtos
+- [ ] Relatorios de vendas avancados
+- [ ] Sistema de cupons de desconto
+- [ ] Notificacoes por email
+- [ ] App mobile
+
+## NOTAS IMPORTANTES
+- Node.js esta em: C:\Users\Eusimar\nodejs\node-v22.16.0-win-x64
+- Git esta em: C:\Program Files\Git\cmd\git.exe
+- Prisma/vercel CLI devem ser invocados pelo caminho completo do node.exe
+- PIX nao esta habilitado no Stripe do usuario
+- Taxas Stripe: 4.99% / 3.99% / 2.99% (tiered)
+- Pagamento: PIX 2 dias uteis, Cartao 15 dias, Boleto 2 dias uteis
+- Todas as chaves de API estao no arquivo CREDENCIAIS.txt (nao versionado)
