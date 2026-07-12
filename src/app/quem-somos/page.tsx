@@ -33,9 +33,7 @@ const values = [
 
 const team = [
   { name: "Equipe Núcleo VIP", role: "Fundadores & Desenvolvimento" },
-  { name: "Suporte ao Produtor", role: "suporte-produtor@nucleovip.com.br" },
-  { name: "Suporte ao Comprador", role: "suporte-comprador@nucleovip.com.br" },
-  { name: "Suporte ao Afiliado", role: "suporte-afiliados@nucleovip.com.br" },
+  { name: "Suporte", role: "contato@nucleovip.com.br" },
 ]
 
 export default function QuemSomosPage() {

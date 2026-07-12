@@ -55,19 +55,19 @@ const faqs = [
 const supportChannels = [
   {
     role: "Produtor",
-    email: "suporte-produtor@nucleovip.com.br",
+    email: "contato@nucleovip.com.br",
     icon: "🎓",
     description: "Dúvidas sobre criação de produtos, vendas, ganhos e comissões",
   },
   {
     role: "Comprador / Aluno",
-    email: "suporte-comprador@nucleovip.com.br",
+    email: "contato@nucleovip.com.br",
     icon: "👤",
     description: "Problemas de acesso, reembolsos, pagamentos e suporte técnico",
   },
   {
     role: "Afiliado",
-    email: "suporte-afiliados@nucleovip.com.br",
+    email: "contato@nucleovip.com.br",
     icon: "🚀",
     description: "Dúvidas sobre links de afiliado, comissões e indicações",
   },
