@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       customer_email: user.email!,
       line_items: lineItems,
       mode: "payment",
-      payment_method_types: ["card", "boleto", "pix"],
+      payment_method_types: ["card", "boleto"],
       payment_method_options: {
         boleto: {
           expires_after_days: 3,
