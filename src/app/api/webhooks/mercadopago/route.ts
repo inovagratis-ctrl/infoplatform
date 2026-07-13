@@ -46,12 +46,12 @@ export async function POST(req: Request) {
               where: { id: affiliateId },
             })
             if (affiliate) {
-              const commission = order.amount * 0.1
-              await prisma.affiliateCommission.create({
+              const commission = order.amount * (affiliate.commissionRate / 100)
+              await prisma.affiliateSale.create({
                 data: {
                   affiliateId: affiliate.id,
                   orderId: order.id,
-                  amount: commission,
+                  commission,
                   status: "pending",
                 },
               })
