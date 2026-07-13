@@ -35,6 +35,9 @@ export function Navbar() {
               <Link href="/ajuda#suporte" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
                 Ajuda
               </Link>
+              <Link href="/contato" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
+                Contato
+              </Link>
               {session && (
                 <Link href="/member" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
                   Meus Produtos
@@ -109,6 +112,7 @@ export function Navbar() {
           <Link href="/register" className="block text-gray-600 font-medium">Criar Produto</Link>
           <Link href="/ajuda" className="block text-gray-600 font-medium">FAQ</Link>
           <Link href="/ajuda#suporte" className="block text-gray-600 font-medium">Ajuda</Link>
+          <Link href="/contato" className="block text-gray-600 font-medium">Contato</Link>
           {session && <Link href="/member" className="block text-gray-600 font-medium">Meus Produtos</Link>}
           {session && <Link href="/member/profile" className="block text-gray-600 font-medium">Meu Perfil</Link>}
           {(user?.role === "producer" || user?.role === "admin") && <Link href="/producer" className="block text-gray-600 font-medium">Produtor</Link>}
