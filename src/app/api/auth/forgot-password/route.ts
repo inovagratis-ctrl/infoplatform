@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     const resetUrl = `${process.env.APP_URL || "https://nucleovip.com.br"}/reset-password?token=${token}`
 
     await resend.emails.send({
-      from: "Núcleo VIP <onboarding@resend.dev>",
+      from: "Núcleo VIP <noreply@nucleovip.com.br>",
       to: email,
       subject: "Recuperação de Senha - Núcleo VIP",
       html: `
