@@ -11,7 +11,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Faça login primeiro" }, { status: 401 })
     }
 
-    const { productId, ref } = await req.json()
+    const body = await req.json()
+    const { productId, ref, paymentMethod, token, installments } = body
+
     const product = await prisma.product.findUnique({ where: { id: productId } })
     if (!product) {
       return NextResponse.json({ error: "Produto não encontrado" }, { status: 404 })
@@ -37,6 +39,61 @@ export async function POST(req: Request) {
       }
     }
 
+    const externalRef = `${user.id}-${product.id}-${affiliateId || ""}`
+
+    if (paymentMethod === "credit_card") {
+      if (!token) {
+        return NextResponse.json({ error: "Token do cartão não enviado" }, { status: 400 })
+      }
+
+      const paymentResult = await payment.create({
+        body: {
+          transaction_amount: product.price,
+          description: product.title,
+          payment_method_id: "visa",
+          token,
+          installments: installments || 1,
+          payer: {
+            email: user.email!,
+            identification: {
+              type: "CPF",
+              number: "00000000000",
+            },
+          },
+          external_reference: externalRef,
+          notification_url: `${process.env.APP_URL}/api/webhooks/mercadopago`,
+        },
+      })
+
+      await prisma.order.create({
+        data: {
+          userId: user.id,
+          productId: product.id,
+          amount: product.price,
+          status: paymentResult.status === "approved" ? "completed" : "pending",
+          paymentId: paymentResult.id?.toString() || "",
+          paymentMethod: "mercadopago",
+          affiliateId: affiliateId,
+        },
+      })
+
+      if (paymentResult.status === "approved") {
+        await prisma.purchase.create({
+          data: {
+            userId: user.id,
+            productId: product.id,
+          },
+        })
+      }
+
+      return NextResponse.json({
+        id: paymentResult.id,
+        status: paymentResult.status,
+        redirect: paymentResult.status === "approved" ? "/success" : null,
+      })
+    }
+
+    // PIX flow (default)
     const paymentResult = await payment.create({
       body: {
         transaction_amount: product.price,
@@ -46,7 +103,7 @@ export async function POST(req: Request) {
           email: user.email!,
           first_name: user.name || "Cliente",
         },
-        external_reference: `${user.id}-${product.id}-${affiliateId || ""}`,
+        external_reference: externalRef,
         notification_url: `${process.env.APP_URL}/api/webhooks/mercadopago`,
       },
     })
