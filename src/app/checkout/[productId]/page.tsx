@@ -4,17 +4,6 @@ import { useState, useEffect, Suspense } from "react"
 import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 
-const PAYMENT_METHODS = [
-  { name: "Cartão de Crédito", icon: "💳", desc: "Até 12x sem juros | Receba em 15 dias" },
-]
-
-const BENEFITS = [
-  "Acesso vitalício ao conteúdo",
-  "Suporte prioritário por email",
-  "Certificado de conclusão",
-  "Atualizações gratuitas",
-]
-
 function CheckoutContent() {
   const { data: session } = useSession()
   const router = useRouter()
@@ -25,6 +14,8 @@ function CheckoutContent() {
   const [product, setProduct] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [pixData, setPixData] = useState<any>(null)
+  const [copying, setCopying] = useState(false)
 
   useEffect(() => {
     fetch(`/api/products/${params.productId}`)
@@ -49,12 +40,73 @@ function CheckoutContent() {
 
     const data = await res.json()
 
-    if (res.ok && data.url) {
-      window.location.href = data.url
+    if (res.ok && data.qr_code) {
+      setPixData(data)
     } else {
-      setError(data.error || "Erro ao processar compra")
+      setError(data.error || "Erro ao processar pagamento")
       setLoading(false)
     }
+  }
+
+  async function copyPixCode() {
+    if (!pixData?.qr_code) return
+    setCopying(true)
+    try {
+      await navigator.clipboard.writeText(pixData.qr_code)
+      setTimeout(() => setCopying(false), 2000)
+    } catch {
+      setCopying(false)
+    }
+  }
+
+  if (pixData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
+          <div className="text-5xl mb-4">⚡</div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">PIX Gerado!</h1>
+          <p className="text-gray-500 mb-6">
+            Escaneie o QR Code ou copie o código abaixo para pagar
+          </p>
+
+          {pixData.qr_code_base64 && (
+            <div className="mb-6">
+              <img
+                src={`data:image/png;base64,${pixData.qr_code_base64}`}
+                alt="QR Code PIX"
+                className="mx-auto border rounded-lg"
+                style={{ maxWidth: 250 }}
+              />
+            </div>
+          )}
+
+          <div className="mb-6">
+            <p className="text-xs text-gray-400 mb-2">Código PIX (copie e cole):</p>
+            <div className="bg-gray-50 rounded-lg p-3 text-xs text-gray-600 break-all font-mono">
+              {pixData.qr_code}
+            </div>
+          </div>
+
+          <button
+            onClick={copyPixCode}
+            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-xl font-semibold hover:from-green-600 hover:to-green-700 transition-all mb-4"
+          >
+            {copying ? "✅ Copiado!" : "📋 Copiar Código PIX"}
+          </button>
+
+          <p className="text-xs text-gray-400">
+            O PIX expira em 30 minutos. Após o pagamento, o acesso será liberado automaticamente.
+          </p>
+
+          <button
+            onClick={() => { setPixData(null); setLoading(false) }}
+            className="mt-4 text-sm text-gray-500 hover:text-gray-700"
+          >
+            ← Voltar ao checkout
+          </button>
+        </div>
+      </div>
+    )
   }
 
   if (!product) {
@@ -79,7 +131,6 @@ function CheckoutContent() {
       <div className="max-w-6xl mx-auto px-4 py-8 lg:py-12">
         <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
-          {/* LEFT - Product Info */}
           <div className="lg:col-span-3 space-y-6">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
               {product.imageUrl ? (
@@ -98,7 +149,7 @@ function CheckoutContent() {
               <div className="mt-6 pt-6 border-t border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-3">Você receberá:</h3>
                 <ul className="space-y-3">
-                  {BENEFITS.map((b) => (
+                  {["Acesso vitalício ao conteúdo", "Suporte prioritário por email", "Certificado de conclusão", "Atualizações gratuitas"].map((b) => (
                     <li key={b} className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-green-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -108,26 +159,9 @@ function CheckoutContent() {
                   ))}
                 </ul>
               </div>
-
-              {product.contentType && (
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <h3 className="font-semibold text-gray-900 mb-3">Detalhes do Produto</h3>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-3">
-                      <span className="text-lg">{product.contentType === "video" ? "🎬" : product.contentType === "pdf" ? "📚" : "🔗"}</span>
-                      <span className="text-gray-600">Formato: <strong>{product.contentType === "video" ? "Vídeo" : product.contentType === "pdf" ? "PDF/E-book" : "Online"}</strong></span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-3">
-                      <span className="text-lg">♾️</span>
-                      <span className="text-gray-600">Acesso: <strong>Vitalício</strong></span>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
-          {/* RIGHT - Checkout Summary */}
           <div className="lg:col-span-2 lg:sticky lg:top-24">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Resumo do Pedido</h2>
@@ -135,17 +169,7 @@ function CheckoutContent() {
               <div className="space-y-3 mb-6 pb-6 border-b border-gray-100">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">{product.title}</span>
-                  <span className="text-gray-900 font-medium">
-                    R$ {product.price.toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Desconto</span>
-                  <span className="text-green-600 font-medium">
-                    {product.comparePrice && product.comparePrice > product.price
-                      ? `-R$ ${(product.comparePrice - product.price).toFixed(2)}`
-                      : "—"}
-                  </span>
+                  <span className="text-gray-900 font-medium">R$ {product.price.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -153,9 +177,7 @@ function CheckoutContent() {
                 <div className="flex justify-between items-baseline mb-2">
                   <span className="text-gray-900 font-semibold">Total</span>
                   <div className="text-right">
-                    <div className="text-3xl font-bold text-gray-900">
-                      R$ {product.price.toFixed(2)}
-                    </div>
+                    <div className="text-3xl font-bold text-gray-900">R$ {product.price.toFixed(2)}</div>
                     {bestInstallment.n > 1 && (
                       <div className="text-sm text-gray-500">
                         ou <strong>{bestInstallment.n}x de R$ {bestInstallment.value.toFixed(2)}</strong> sem juros
@@ -165,24 +187,23 @@ function CheckoutContent() {
                 </div>
               </div>
 
-              {/* Payment Methods */}
               <div className="mb-6 pb-6 border-b border-gray-100">
                 <h3 className="text-sm font-semibold text-gray-700 mb-3">Formas de pagamento</h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {PAYMENT_METHODS.map((pm) => (
-                    <div key={pm.name} className="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
-                      <div className="text-xl mb-1">{pm.icon}</div>
-                      <div className="text-xs font-medium text-gray-700">{pm.name.split(" ")[0]}</div>
-                      <div className="text-[10px] text-gray-400 mt-0.5">{pm.desc}</div>
+                <div className="space-y-2">
+                  <div className="bg-green-50 rounded-lg p-3 flex items-center gap-3 border border-green-200">
+                    <span className="text-xl">⚡</span>
+                    <div>
+                      <div className="text-sm font-medium text-green-800">PIX</div>
+                      <div className="text-xs text-green-600">Aprovação instantânea</div>
                     </div>
-                  ))}
-                </div>
-                <div className="mt-3 flex justify-center gap-2">
-                  <span className="text-xs text-gray-400">Visa</span>
-                  <span className="text-xs text-gray-400">Mastercard</span>
-                  <span className="text-xs text-gray-400">Elo</span>
-                  <span className="text-xs text-gray-400">Hipercard</span>
-                  <span className="text-xs text-gray-400">Amex</span>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-3 flex items-center gap-3 border border-gray-200">
+                    <span className="text-xl">💳</span>
+                    <div>
+                      <div className="text-sm font-medium text-gray-700">Cartão de Crédito</div>
+                      <div className="text-xs text-gray-500">Até 12x sem juros</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -218,13 +239,7 @@ function CheckoutContent() {
                   <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  Pagamento 100% seguro via Stripe
-                </div>
-                <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
-                  <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                  Dados protegidos com criptografia SSL
+                  Pagamento 100% seguro via Mercado Pago
                 </div>
               </div>
 
@@ -239,20 +254,6 @@ function CheckoutContent() {
                   </p>
                 </div>
               )}
-            </div>
-
-            {/* Trust badges */}
-            <div className="mt-4 grid grid-cols-3 gap-3">
-              {[
-                { icon: "🛡️", text: "Compra Garantida" },
-                { icon: "🚚", text: "Acesso Imediato" },
-                { icon: "💬", text: "Suporte 24h" },
-              ].map((badge) => (
-                <div key={badge.text} className="bg-white rounded-xl border border-gray-100 p-3 text-center shadow-sm">
-                  <div className="text-xl mb-1">{badge.icon}</div>
-                  <div className="text-xs text-gray-600 font-medium">{badge.text}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>

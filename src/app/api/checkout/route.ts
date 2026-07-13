@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { stripe } from "@/lib/stripe"
+import { payment } from "@/lib/mercadopago"
 import { prisma } from "@/lib/prisma"
 
 export async function POST(req: Request) {
@@ -37,50 +37,41 @@ export async function POST(req: Request) {
       }
     }
 
-    const priceInCents = Math.round(product.price * 100)
-
-    const lineItems = [{
-      price_data: {
-        currency: "brl",
-        product_data: {
-          name: product.title,
-          description: product.description.substring(0, 100),
-          images: product.imageUrl ? [product.imageUrl] : [],
+    const paymentResult = await payment.create({
+      body: {
+        transaction_amount: product.price,
+        description: product.title,
+        payment_method_id: "pix",
+        payer: {
+          email: user.email!,
+          first_name: user.name || "Cliente",
         },
-        unit_amount: priceInCents,
-      },
-      quantity: 1,
-    }]
-
-    const stripeSession = await stripe.checkout.sessions.create({
-      customer_email: user.email!,
-      line_items: lineItems,
-      mode: "payment",
-      payment_method_types: ["card"],
-      invoice_creation: { enabled: true },
-      success_url: `${process.env.APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.APP_URL}/checkout/${productId}?canceled=true`,
-      metadata: {
-        userId: user.id,
-        productId: product.id,
-        affiliateId: affiliateId || "",
+        external_reference: `${user.id}-${product.id}-${affiliateId || ""}`,
+        notification_url: `${process.env.APP_URL}/api/webhooks/mercadopago`,
       },
     })
 
-    // Create order as pending
     await prisma.order.create({
       data: {
         userId: user.id,
         productId: product.id,
         amount: product.price,
         status: "pending",
-        paymentId: stripeSession.id,
-        paymentMethod: "stripe",
+        paymentId: paymentResult.id?.toString() || "",
+        paymentMethod: "mercadopago",
         affiliateId: affiliateId,
       },
     })
 
-    return NextResponse.json({ url: stripeSession.url })
+    const pixData = paymentResult.point_of_interaction?.transaction_data
+
+    return NextResponse.json({
+      id: paymentResult.id,
+      status: paymentResult.status,
+      qr_code: pixData?.qr_code,
+      qr_code_base64: pixData?.qr_code_base64,
+      ticket_url: pixData?.ticket_url,
+    })
   } catch (error: any) {
     console.error("Checkout error:", error)
     return NextResponse.json({ error: error.message || "Erro ao processar pagamento" }, { status: 500 })
