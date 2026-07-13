@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { Resend } from "resend"
 import crypto from "crypto"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
@@ -26,23 +29,32 @@ export async function POST(req: Request) {
 
     const resetUrl = `${process.env.APP_URL || "https://nucleovip.com.br"}/reset-password?token=${token}`
 
-    await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        access_key: process.env.WEB3FORMS_ACCESS_KEY || "46acd572-d430-455d-b3f6-6aa63e8d2036",
-        name: "Núcleo VIP",
-        email: email,
-        subject: "[Núcleo VIP] Recuperação de Senha",
-        message: `Você solicitou a recuperação de senha. Clique no link abaixo para criar uma nova senha:\n\n${resetUrl}\n\nEste link expira em 1 hora.\n\nSe você não solicitou esta recuperação, ignore este email.`,
-        from_name: "Núcleo VIP",
-        replyto: email,
-      }),
+    await resend.emails.send({
+      from: "Núcleo VIP <onboarding@resend.dev>",
+      to: email,
+      subject: "Recuperação de Senha - Núcleo VIP",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #333;">Recuperação de Senha</h2>
+          <p style="color: #666; line-height: 1.6;">
+            Você solicitou a recuperação de senha da sua conta no Núcleo VIP.
+          </p>
+          <p style="color: #666; line-height: 1.6;">
+            Clique no botão abaixo para criar uma nova senha:
+          </p>
+          <a href="${resetUrl}" style="display: inline-block; background-color: #6366f1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 16px 0;">
+            Redefinir Senha
+          </a>
+          <p style="color: #999; font-size: 12px; margin-top: 24px;">
+            Este link expira em 1 hora. Se você não solicitou esta recuperação, ignore este email.
+          </p>
+        </div>
+      `,
     })
 
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error("Forgot password error:", error)
-    return NextResponse.json({ error: "Erro ao processar solicitação" }, { status: 500 })
+    return NextResponse.json({ error: "Erro ao enviar email" }, { status: 500 })
   }
 }
