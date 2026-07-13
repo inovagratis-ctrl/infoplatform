@@ -20,7 +20,7 @@ export function Navbar() {
               <Link href="/" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
                 Início
               </Link>
-              <Link href="#taxas" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
+              <Link href="/#taxas" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
                 Taxas
               </Link>
               <Link href="/quem-somos" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
@@ -107,7 +107,7 @@ export function Navbar() {
       {menuOpen && (
         <div className="md:hidden border-t border-gray-100 px-4 py-4 space-y-3 bg-white">
           <Link href="/" className="block text-gray-600 font-medium">Início</Link>
-          <Link href="#taxas" className="block text-gray-600 font-medium">Taxas</Link>
+          <Link href="/#taxas" className="block text-gray-600 font-medium">Taxas</Link>
           <Link href="/quem-somos" className="block text-gray-600 font-medium">Sobre Nós</Link>
           <Link href="/register" className="block text-gray-600 font-medium">Criar Produto</Link>
           <Link href="/ajuda" className="block text-gray-600 font-medium">FAQ</Link>
