@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       customer_email: user.email!,
       line_items: lineItems,
       mode: "payment",
-      payment_method_types: ["card", "pix"],
+      payment_method_types: ["card"],
       invoice_creation: { enabled: true },
       success_url: `${process.env.APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.APP_URL}/checkout/${productId}?canceled=true`,
