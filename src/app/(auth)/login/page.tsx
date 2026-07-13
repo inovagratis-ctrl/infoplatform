@@ -91,8 +91,12 @@ function LoginForm() {
                 required
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+            <div className="flex items-center justify-between">
+              <label className="block text-sm font-medium text-gray-700">Senha</label>
+              <Link href="/forgot-password" className="text-sm text-primary-600 hover:text-primary-700">
+                Esqueceu a senha?
+              </Link>
+            </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
