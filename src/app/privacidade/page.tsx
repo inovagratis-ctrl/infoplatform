@@ -107,8 +107,8 @@ export default function PrivacidadePage() {
             </ul>
             <p className="text-gray-600 leading-relaxed mt-3">
               Para exercer seus direitos, entre em contato pelo e-mail:{' '}
-              <a href="mailto:contato@nucleovip.com.br" className="text-primary-600 hover:text-primary-700 font-medium">
-                contato@nucleovip.com.br
+              <a href="mailto:inovagratis@gmail.com" className="text-primary-600 hover:text-primary-700 font-medium">
+                inovagratis@gmail.com
               </a>
             </p>
           </section>
@@ -118,8 +118,8 @@ export default function PrivacidadePage() {
             <p className="text-gray-600 leading-relaxed">
               Nosso Encarregado de Proteção de Dados (DPO) pode ser contatado exclusivamente para
               questões relacionadas à privacidade e proteção de dados através do e-mail:{' '}
-              <a href="mailto:contato@nucleovip.com.br" className="text-primary-600 hover:text-primary-700 font-medium">
-                contato@nucleovip.com.br
+              <a href="mailto:inovagratis@gmail.com" className="text-primary-600 hover:text-primary-700 font-medium">
+                inovagratis@gmail.com
               </a>
             </p>
           </section>

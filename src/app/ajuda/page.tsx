@@ -55,19 +55,19 @@ const faqs = [
 const supportChannels = [
   {
     role: "Produtor",
-    email: "contato@nucleovip.com.br",
+    email: "inovagratis@gmail.com",
     icon: "🎓",
     description: "Dúvidas sobre criação de produtos, vendas, ganhos e comissões",
   },
   {
     role: "Comprador / Aluno",
-    email: "contato@nucleovip.com.br",
+    email: "inovagratis@gmail.com",
     icon: "👤",
     description: "Problemas de acesso, reembolsos, pagamentos e suporte técnico",
   },
   {
     role: "Afiliado",
-    email: "contato@nucleovip.com.br",
+    email: "inovagratis@gmail.com",
     icon: "🚀",
     description: "Dúvidas sobre links de afiliado, comissões e indicações",
   },
