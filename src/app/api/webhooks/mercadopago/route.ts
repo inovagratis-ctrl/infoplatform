@@ -38,8 +38,6 @@ export async function POST(req: Request) {
             data: {
               userId: order.userId,
               productId: order.productId,
-              amount: order.amount,
-              paymentId: paymentId.toString(),
             },
           })
 
